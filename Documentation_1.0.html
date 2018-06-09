@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC '-//IETF//DTD HTML//EN'>
+<HTML>
+<HEAD>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+<TITLE>ZET-CSV</TITLE>
+
+<style>
+ .contents { font-size: 20; font-style: italic; font-weight: bold; color: #008080 }
+ .doctext  { text-align: justify; margin-left: 10; font-size: 18; font-style: normal; font-weight: normal; color: #000000 }
+ .docpre  { text-align: justify; margin-left: 10; white-space: pre; font-size: 18; font-style: normal; font-weight: normal; color: #000000 }
+ .caption  { text-align: center; white-space: nowrap; font-size: 20; font-style: italic; font-weight: bold; color: #008080 }
+ .ifc  { text-align: center; margin-left: 10; white-space: nowrap; font-size: 18; font-style: italic; font-weight: bold; color: #000000 }
+</style>
+
+</HEAD>
+<BODY  bgcolor='#FFFFFF'>
+
+<br><br><br><center><span class="caption" style="color: #000000; font-size: 23">ZET-CSV</span></center><br><br><br>
+<div  class="doctext">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZET-CSV is the C++ library for csv format. ZET-CSV uses STL library. Interface CSV container similar to the interface std::vector.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To install, use the Makefile (make -f Makefile, make -f Makefile install).
+ By default, header file(zCSV .h) and lib file will be installed in /usr/local/include/ and /usr/local/lib/.
+ You can use ZET- CSV (not as the library) with your code by rewriting the Makefile.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ZET- CSV contains following csv extension: a different number of columns in the rows, literals \r, \n, \r\n indicate the end of the row.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">bool parse(const char* p, size_t len, char delim=',', char quote='\&quot;');</span><br>
+<span class="ifc">bool parse(const std::string &src, char delim=',', char quote='\&quot;');</span><br><br>
+Parses CSV text src(p).<br>
+The function returns true if successfully , false if unsuccessfully.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">void write(std::string &ret, char delim=',', char quote='\&quot;') const;</span><br><br>
+Returns CSV text.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">void normalize();</span><br><br>
+Sets a common size for all rows. The length of every row is equal to the maximum size of the rows in the container.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">const std::vector<std::string>& operator[](size_t pos) const;</span><br>
+<span class="ifc">std::vector<std::string>& operator[](size_t pos);</span><br>
+<span class="ifc">const std::vector<std::string>& at(size_t pos) const;</span><br>
+<span class="ifc">std::vector<std::string>& at(size_t pos);</span><br><br>
+Returns a reference to row are placed at pos.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">const std::vector<std::string>& front() const;</span><br>
+<span class="ifc">std::vector<std::string>& front();</span><br><br>
+Returns a reference to the first row.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">const std::vector<std::string>& back() const;</span><br>
+<span class="ifc">std::vector<std::string>& back();</span><br><br>
+Returns a reference to the last row.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">bool empty() const;</span><br><br>
+Indicates when the object has any rows.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">size_t size() const;</span><br><br>
+Returns the number of rows that the object has.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">void clear();</span><br><br>
+Removes all rows from the object (which are destroyed), leaving the container with a size of 0.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">bool erase(size_t pos);</span><br><br>
+Removes from the object a single row at pos.<br>
+This effectively reduces the container size by the one row, which are destroyed.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">bool pop_back();</span><br><br>
+Removes the last row in the object, effectively reducing the container size by one.<br>
+This destroys the removed row.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">size_t insert(size_t pos, const std::vector<std::string>& row);</span><br>
+<span class="ifc">size_t insert(size_t pos, std::vector<std::string>* row);</span><br><br>
+The object is extended by inserting the element row before the element at the specified pos, effectively increasing the container size by the one.
+ If pos >= size the object will be added to back.<br>
+Returns the position of inserted row. At the first function the copy of the row will be created. At the second function the object row must be inserted.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+<div  class="doctext">
+<span class="ifc">size_t push_back(const std::vector<std::string>& row);</span><br>
+<span class="ifc">size_t push_back(std::vector<std::string>* row);</span><br><br>
+Adds a new row at the end of the object, after its current last element. The object is extended by adding the element row at the back,
+ effectively increasing the container size by the one.<br>
+Returns the position of added row. At the first function the copy of the row will be created. At the second function the object row must be added.<br>
+</div>
+
+<br><hr width=100% color= #000000 align="center"><br>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+</BODY></HTML>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
